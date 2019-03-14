@@ -1,0 +1,24 @@
+{
+  "name": "pockmon-go",
+  "version": "1.0.0",
+  "description": "donghao's blockchain",
+  "main": "blockchain.js",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "p2p": "^0.10.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donghao0827/pockmon-go.git"
+  },
+  "author": "donghao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/donghao0827/pockmon-go/issues"
+  },
+  "homepage": "https://github.com/donghao0827/pockmon-go#readme"
+}
