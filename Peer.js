@@ -8,3 +8,5 @@ const peer = p2p.peer({
     wellKnownPeers: [{ host: 'localhost', port: 4000 }]
 });
 
+console.log(peer.status());
+
