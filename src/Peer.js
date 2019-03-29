@@ -1,5 +1,5 @@
 const p2p = require('p2p');
-var utils = require("../public/Utils");
+const utils = require("../public/Utils");
 
 class Peer {
     constructor(host, port, MCL) {
