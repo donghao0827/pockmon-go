@@ -2,7 +2,8 @@ const p2p = require('p2p');
 var utils = require("../public/Utils");
 
 class Peer {
-    constructor(host, port, MCL) {
+    constructor(host, port, MCL, name) {
+        this.name = name;
         this.host = host;
         this.port = port;
         this.MCL = MCL;
@@ -16,28 +17,28 @@ class Peer {
         })
     }
     send(peerGroup, massage) {
+        let count = 0;
+        setTimeout(()=> {
+            console.log(`There is ${ count } nodes that verified the Request.`);
+        }, 5000)
         peerGroup.map((partner) => {
             this.peer.remote(partner).run('handle/recv', massage, (err, result) => {
-                console.log(err, result)
+                count = count + parseInt(result);
             })
         })
     }
 
     recv() {
         this.peer.handle.recv = (payload, done) => {
-            console.log(`${this.port} get the data: ${payload}`); 
-            console.log('verify Hash ...');
-            if(this.verifySignature(payload)) {
-                console.log('Hash is right.');
-            } else {
-                console.log('Hash is wrong!');
-            } 
-            console.log('verify identity ...');
-            if(this.verifyIdentity(payload.sponsor, this.MCL) === -1) {
-                console.log('Identity is wrong!');
-            } else {
-                console.log('Identity is right.');
-            } 
+            const msg = payload;
+            console.log("#####################    " + this.name + "    #####################");
+            console.log(`${ this.name } has received the message. <== ${ msg.timestamp }`);
+
+            const isHashRight = this.verifySignature(payload);
+            const isSponsorRight = this.verifyIdentity(payload.sponsor, this.MCL) === 0;
+
+            isHashRight && isSponsorRight ? done(null, "1") : done(null, "0");
+            console.log("################################################");
         }
     }
 
@@ -48,7 +49,6 @@ class Peer {
     }
 
     verifyIdentity(sponsor, MCL) {
-        console.log(sponsor, MCL, MCL.indexOf(sponsor));
         return MCL.indexOf(sponsor);
     }
 }
